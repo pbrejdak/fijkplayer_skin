@@ -104,13 +104,13 @@ class _VideoDetailPageState extends State<VideoDetailPage>
               // 标题 当前页面顶部的标题部分
               playerTitle: "标题",
               // 当前视频源tabIndex
-              curTabIdx: _curTabIdx,
+              // curTabIdx: _curTabIdx,
               // 当前视频源activeIndex
-              curActiveIdx: _curActiveIdx,
+              // curActiveIdx: _curActiveIdx,
               // 显示的配置
               showConfig: v_cfg,
               // json格式化后的视频数据
-              videoFormat: _videoSourceTabs,
+              // videoFormat: _videoSourceTabs,
             );
           },
         ),

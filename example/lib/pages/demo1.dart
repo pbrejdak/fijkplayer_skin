@@ -47,34 +47,9 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         "name": "天空资源",
         "list": [
           {
-            "url": "https://v10.dious.cc/20211009/nONG14sk/index.m3u8",
-            "name": "一级指控"
+            "url": "https://n-22-1.dcs.redcdn.pl/nvr/o2/sejm/ENC01/live.livx?startTime=655894729429&stopTime=655894939429",
+            "name": "test"
           },
-          {
-            "url": "https://v7.dious.cc/20211010/qNFrQSTP/index.m3u8",
-            "name": "白蛇传·情"
-          },
-          {
-            "url": "https://v10.dious.cc/20211001/UBv22vhz/index.m3u8",
-            "name": "情书"
-          }
-        ]
-      },
-      {
-        "name": "天空资源",
-        "list": [
-          {
-            "url": "https://n1.szjal.cn/20210428/lsNZ6QAL/index.m3u8",
-            "name": "综艺"
-          },
-          {
-            "url": "https://static.smartisanos.cn/common/video/t1-ui.mp4",
-            "name": "锤子1"
-          },
-          {
-            "url": "https://static.smartisanos.cn/common/video/video-jgpro.mp4",
-            "name": "锤子2"
-          }
         ]
       },
     ]
@@ -119,96 +94,97 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   // build 剧集
-  Widget buildPlayDrawer() {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(24),
-        child: AppBar(
-          backgroundColor: Colors.black,
-          automaticallyImplyLeading: false,
-          primary: false,
-          elevation: 0,
-          title: TabBar(
-            tabs: _videoSourceTabs!.video!
-                .map((e) => Tab(text: e!.name!))
-                .toList(),
-            isScrollable: true,
-            controller: _tabController,
-          ),
-        ),
-      ),
-      body: Container(
-        color: Colors.black87,
-        child: TabBarView(
-          controller: _tabController,
-          children: createTabConList(),
-        ),
-      ),
-    );
-  }
-
-  // 剧集 tabCon
-  List<Widget> createTabConList() {
-    List<Widget> list = [];
-    _videoSourceTabs!.video!.asMap().keys.forEach((int tabIdx) {
-      List<Widget> playListBtns = _videoSourceTabs!.video![tabIdx]!.list!
-          .asMap()
-          .keys
-          .map((int activeIdx) {
-        return Padding(
-          padding: EdgeInsets.all(5),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              elevation: MaterialStateProperty.all(0),
-              backgroundColor: MaterialStateProperty.all(
-                  tabIdx == _curTabIdx && activeIdx == _curActiveIdx
-                      ? Colors.red
-                      : Colors.blue),
-            ),
-            onPressed: () async {
-              setState(() {
-                _curTabIdx = tabIdx;
-                _curActiveIdx = activeIdx;
-              });
-              String nextVideoUrl =
-                  _videoSourceTabs!.video![tabIdx]!.list![activeIdx]!.url!;
-              // 切换播放源
-              await player.stop();
-              await player.reset();
-              player.setDataSource(nextVideoUrl, autoPlay: true);
-            },
-            child: Text(
-              _videoSourceTabs!.video![tabIdx]!.list![activeIdx]!.name!,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        );
-      }).toList();
-      //
-      list.add(
-        SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(left: 5, right: 5),
-            child: Wrap(
-              direction: Axis.horizontal,
-              children: playListBtns,
-            ),
-          ),
-        ),
-      );
-    });
-    return list;
-  }
+  // Widget buildPlayDrawer() {
+  //   return Scaffold(
+  //     appBar: PreferredSize(
+  //       preferredSize: Size.fromHeight(24),
+  //       child: AppBar(
+  //         backgroundColor: Colors.black,
+  //         automaticallyImplyLeading: false,
+  //         primary: false,
+  //         elevation: 0,
+  //         title: TabBar(
+  //           tabs: _videoSourceTabs!.video!
+  //               .map((e) => Tab(text: e!.name!))
+  //               .toList(),
+  //           isScrollable: true,
+  //           controller: _tabController,
+  //         ),
+  //       ),
+  //     ),
+  //     body: Container(
+  //       color: Colors.black87,
+  //       child: TabBarView(
+  //         controller: _tabController,
+  //         children: createTabConList(),
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  // // 剧集 tabCon
+  // List<Widget> createTabConList() {
+  //   List<Widget> list = [];
+  //   _videoSourceTabs!.video!.asMap().keys.forEach((int tabIdx) {
+  //     List<Widget> playListBtns = _videoSourceTabs!.video![tabIdx]!.list!
+  //         .asMap()
+  //         .keys
+  //         .map((int activeIdx) {
+  //       return Padding(
+  //         padding: EdgeInsets.all(5),
+  //         child: ElevatedButton(
+  //           style: ButtonStyle(
+  //             shape: MaterialStateProperty.all(
+  //               RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(5),
+  //               ),
+  //             ),
+  //             elevation: MaterialStateProperty.all(0),
+  //             backgroundColor: MaterialStateProperty.all(
+  //                 tabIdx == _curTabIdx && activeIdx == _curActiveIdx
+  //                     ? Colors.red
+  //                     : Colors.blue),
+  //           ),
+  //           onPressed: () async {
+  //             setState(() {
+  //               _curTabIdx = tabIdx;
+  //               _curActiveIdx = activeIdx;
+  //             });
+  //             String nextVideoUrl =
+  //                 _videoSourceTabs!.video![tabIdx]!.list![activeIdx]!.url!;
+  //             // 切换播放源
+  //             await player.stop();
+  //             await player.reset();
+  //             player.setDataSource(nextVideoUrl, autoPlay: true);
+  //           },
+  //           child: Text(
+  //             _videoSourceTabs!.video![tabIdx]!.list![activeIdx]!.name!,
+  //             style: TextStyle(
+  //               color: Colors.white,
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     }).toList();
+  //     //
+  //     list.add(
+  //       SingleChildScrollView(
+  //         child: Padding(
+  //           padding: EdgeInsets.only(left: 5, right: 5),
+  //           child: Wrap(
+  //             direction: Axis.horizontal,
+  //             children: playListBtns,
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   });
+  //   return list;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    player.setDataSource("https://n-22-1.dcs.redcdn.pl/nvr/o2/sejm/ENC01/live.livx?startTime=655894729429&stopTime=655894939429", autoPlay: true);
     return Column(
       children: [
         FijkView(
@@ -232,26 +208,26 @@ class _VideoDetailPageState extends State<VideoDetailPage>
               // 标题 当前页面顶部的标题部分
               playerTitle: "标题",
               // 当前视频改变钩子
-              onChangeVideo: onChangeVideo,
+              // onChangeVideo: onChangeVideo,
               // 当前视频源tabIndex
-              curTabIdx: _curTabIdx,
+              // curTabIdx: _curTabIdx,
               // 当前视频源activeIndex
-              curActiveIdx: _curActiveIdx,
+              // curActiveIdx: _curActiveIdx,
               // 显示的配置
               showConfig: v_cfg,
               // json格式化后的视频数据
-              videoFormat: _videoSourceTabs,
+              // videoFormat: _videoSourceTabs,
             );
           },
         ),
-        Container(
-          height: 300,
-          child: buildPlayDrawer(),
-        ),
-        Container(
-          child: Text(
-              '当前tabIdx : ${_curTabIdx.toString()} 当前activeIdx : ${_curActiveIdx.toString()}'),
-        )
+        // Container(
+        //   height: 300,
+        //   child: buildPlayDrawer(),
+        // ),
+        // Container(
+        //   child: Text(
+        //       '当前tabIdx : ${_curTabIdx.toString()} 当前activeIdx : ${_curActiveIdx.toString()}'),
+        // )
       ],
     );
   }

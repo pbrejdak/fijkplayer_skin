@@ -50,11 +50,12 @@ class CustomFijkPanel extends StatefulWidget {
   final Rect texturePos;
   final BuildContext? pageContent;
   final String playerTitle;
-  final Function? onChangeVideo;
-  final int curTabIdx;
-  final int curActiveIdx;
+  // final Function? onChangeVideo;
+  // final int curTabIdx;
+  // final int curActiveIdx;
   final ShowConfigAbs showConfig;
-  final VideoSourceFormat? videoFormat;
+  // final VideoSourceFormat? videoFormat;
+  final Function? videoEnd;
 
   CustomFijkPanel({
     required this.player,
@@ -62,11 +63,12 @@ class CustomFijkPanel extends StatefulWidget {
     required this.texturePos,
     this.pageContent,
     this.playerTitle = "",
+    this.videoEnd,
     required this.showConfig,
-    this.onChangeVideo,
-    required this.videoFormat,
-    required this.curTabIdx,
-    required this.curActiveIdx,
+    // this.onChangeVideo,
+    // required this.videoFormat,
+    // required this.curTabIdx,
+    // required this.curActiveIdx,
   });
 
   @override
@@ -77,7 +79,7 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   FijkPlayer get player => widget.player;
   ShowConfigAbs get showConfig => widget.showConfig;
-  VideoSourceFormat get _videoSourceTabs => widget.videoFormat!;
+  // VideoSourceFormat get _videoSourceTabs => widget.videoFormat!;
 
   bool _lockStuff = lockStuff;
   bool _hideLockStuff = hideLockStuff;
@@ -91,13 +93,13 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
 
   AnimationController? _animationController;
   Animation<Offset>? _animation;
-  late TabController _tabController;
+  // late TabController _tabController;
 
   void initEvent() {
-    _tabController = TabController(
-      length: _videoSourceTabs.video!.length,
-      vsync: this,
-    );
+    // _tabController = TabController(
+      // length: _videoSourceTabs.video!.length,/
+      // vsync: this,
+    // );
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 280),
       vsync: this,
@@ -108,7 +110,7 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
       end: Offset.zero,
     ).animate(_animationController!);
     // is not null
-    if (_videoSourceTabs.video!.length < 1) return null;
+    // if (_videoSourceTabs.video!.length < 1) return null;
     // init plater state
     setState(() {
       _playerState = player.value.state;
@@ -133,7 +135,7 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
     _currentPosSubs?.cancel();
     _hideLockTimer?.cancel();
     player.removeListener(_playerValueChanged);
-    _tabController.dispose();
+    // _tabController.dispose();
     _animationController!.dispose();
     Wakelock.disable();
     super.dispose();
@@ -175,19 +177,19 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
   }
 
   // 切换播放源
-  Future<void> changeCurPlayVideo(int tabIdx, int activeIdx) async {
-    await player.stop();
-    player.reset().then((_) {
-      String curTabActiveUrl =
-          _videoSourceTabs.video![tabIdx]!.list![activeIdx]!.url!;
-      player.setDataSource(
-        curTabActiveUrl,
-        autoPlay: true,
-      );
-      // 回调
-      widget.onChangeVideo!(tabIdx, activeIdx);
-    });
-  }
+  // Future<void> changeCurPlayVideo(int tabIdx, int activeIdx) async {
+  //   await player.stop();
+  //   player.reset().then((_) {
+  //     String curTabActiveUrl =
+  //         _videoSourceTabs.video![tabIdx]!.list![activeIdx]!.url!;
+  //     player.setDataSource(
+  //       curTabActiveUrl,
+  //       autoPlay: true,
+  //     );
+  //     // 回调
+  //     widget.onChangeVideo!(tabIdx, activeIdx);
+  //   });
+  // }
 
   void _cancelAndRestartLockTimer() {
     if (_hideLockStuff == true) {
@@ -300,25 +302,25 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
           ),
           SizedBox(height: 5),
           // 重试
-          ElevatedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              elevation: MaterialStateProperty.all(0),
-              backgroundColor: MaterialStateProperty.all(Colors.white),
-            ),
-            onPressed: () {
-              // 切换视频
-              changeCurPlayVideo(widget.curTabIdx, widget.curActiveIdx);
-            },
-            child: Text(
-              "点击重试",
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
+          // ElevatedButton(
+          //   style: ButtonStyle(
+          //     shape: MaterialStateProperty.all(
+          //       RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(20),
+          //       ),
+          //     ),
+          //     elevation: MaterialStateProperty.all(0),
+          //     backgroundColor: MaterialStateProperty.all(Colors.white),
+          //   ),
+          //   onPressed: () {
+          //     // 切换视频
+          //     changeCurPlayVideo(widget.curTabIdx, widget.curActiveIdx);
+          //   },
+          //   child: Text(
+          //     "点击重试",
+          //     style: TextStyle(color: Colors.black),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -357,113 +359,113 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
   }
 
   // 抽屉组件 - 播放列表
-  Widget _buildPlayerListDrawer() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () async {
-                await _animationController!.reverse();
-                setState(() {
-                  _drawerState = false;
-                });
-              },
-            ),
-          ),
-          Container(
-            child: SlideTransition(
-              position: _animation!,
-              child: Container(
-                height: window.physicalSize.height,
-                width: 320,
-                child: _buildPlayDrawer(),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlayerListDrawer() {
+  //   return Container(
+  //     alignment: Alignment.centerRight,
+  //     child: Row(
+  //       children: [
+  //         Expanded(
+  //           child: GestureDetector(
+  //             onTap: () async {
+  //               await _animationController!.reverse();
+  //               setState(() {
+  //                 _drawerState = false;
+  //               });
+  //             },
+  //           ),
+  //         ),
+  //         Container(
+  //           child: SlideTransition(
+  //             position: _animation!,
+  //             child: Container(
+  //               height: window.physicalSize.height,
+  //               width: 320,
+  //               child: _buildPlayDrawer(),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   // build 剧集
-  Widget _buildPlayDrawer() {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black87,
-        automaticallyImplyLeading: false,
-        elevation: 0.1,
-        title: TabBar(
-          tabs:
-              _videoSourceTabs.video!.map((e) => Tab(text: e!.name!)).toList(),
-          isScrollable: true,
-          controller: _tabController,
-        ),
-      ),
-      body: Container(
-        child: TabBarView(
-          controller: _tabController,
-          children: _createTabConList(),
-        ),
-        color: Colors.black,
-      ),
-    );
-  }
+  // Widget _buildPlayDrawer() {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       backgroundColor: Colors.black87,
+  //       automaticallyImplyLeading: false,
+  //       elevation: 0.1,
+  //       title: TabBar(
+  //         tabs:
+  //             _videoSourceTabs.video!.map((e) => Tab(text: e!.name!)).toList(),
+  //         isScrollable: true,
+  //         controller: _tabController,
+  //       ),
+  //     ),
+  //     body: Container(
+  //       child: TabBarView(
+  //         controller: _tabController,
+  //         children: _createTabConList(),
+  //       ),
+  //       color: Colors.black,
+  //     ),
+  //   );
+  // }
 
   // 剧集 tabCon
-  List<Widget> _createTabConList() {
-    List<Widget> list = [];
-    _videoSourceTabs.video!.asMap().keys.forEach((int tabIdx) {
-      List<Widget> playListBtns = _videoSourceTabs.video![tabIdx]!.list!
-          .asMap()
-          .keys
-          .map((int activeIdx) {
-        return Padding(
-          padding: EdgeInsets.all(5),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              elevation: MaterialStateProperty.all(0),
-              backgroundColor: MaterialStateProperty.all(
-                  tabIdx == widget.curTabIdx && activeIdx == widget.curActiveIdx
-                      ? Colors.red
-                      : Colors.blue),
-            ),
-            onPressed: () {
-              int newTabIdx = tabIdx;
-              int newActiveIdx = activeIdx;
-              // 切换播放源
-              changeCurPlayVideo(newTabIdx, newActiveIdx);
-            },
-            child: Text(
-              _videoSourceTabs.video![tabIdx]!.list![activeIdx]!.name!,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        );
-      }).toList();
-      //
-      list.add(
-        SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(left: 5, right: 5),
-            child: Wrap(
-              direction: Axis.horizontal,
-              children: playListBtns,
-            ),
-          ),
-        ),
-      );
-    });
-    return list;
-  }
+  // List<Widget> _createTabConList() {
+  //   List<Widget> list = [];
+  //   _videoSourceTabs.video!.asMap().keys.forEach((int tabIdx) {
+  //     List<Widget> playListBtns = _videoSourceTabs.video![tabIdx]!.list!
+  //         .asMap()
+  //         .keys
+  //         .map((int activeIdx) {
+  //       return Padding(
+  //         padding: EdgeInsets.all(5),
+  //         child: ElevatedButton(
+  //           style: ButtonStyle(
+  //             shape: MaterialStateProperty.all(
+  //               RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(5),
+  //               ),
+  //             ),
+  //             elevation: MaterialStateProperty.all(0),
+  //             backgroundColor: MaterialStateProperty.all(
+  //                 tabIdx == widget.curTabIdx && activeIdx == widget.curActiveIdx
+  //                     ? Colors.red
+  //                     : Colors.blue),
+  //           ),
+  //           onPressed: () {
+  //             int newTabIdx = tabIdx;
+  //             int newActiveIdx = activeIdx;
+  //             // 切换播放源
+  //             changeCurPlayVideo(newTabIdx, newActiveIdx);
+  //           },
+  //           child: Text(
+  //             _videoSourceTabs.video![tabIdx]!.list![activeIdx]!.name!,
+  //             style: TextStyle(
+  //               color: Colors.white,
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     }).toList();
+  //     //
+  //     list.add(
+  //       SingleChildScrollView(
+  //         child: Padding(
+  //           padding: EdgeInsets.only(left: 5, right: 5),
+  //           child: Wrap(
+  //             direction: Axis.horizontal,
+  //             children: playListBtns,
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   });
+  //   return list;
+  // }
 
   // 获取到媒体信息前的状态
   Widget _buildLoadingWidget() {
@@ -567,24 +569,25 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
           _buidLockStateDetctor(),
         );
       } else if (_drawerState == true && widget.player.value.fullScreen) {
-        ws.add(
-          _buildPlayerListDrawer(),
-        );
+        // ws.add(
+        //   _buildPlayerListDrawer(),
+        // );
       } else {
         ws.add(
           _buildGestureDetector(
-            curActiveIdx: widget.curActiveIdx,
-            curTabIdx: widget.curTabIdx,
-            onChangeVideo: widget.onChangeVideo,
+            // curActiveIdx: widget.curActiveIdx,
+            // curTabIdx: widget.curTabIdx,
+            // onChangeVideo: widget.onChangeVideo,
             player: widget.player,
             texturePos: widget.texturePos,
             showConfig: widget.showConfig,
             pageContent: widget.pageContent,
             playerTitle: widget.playerTitle,
             viewSize: widget.viewSize,
-            videoFormat: widget.videoFormat,
+            // videoFormat: widget.videoFormat,
             changeDrawerState: changeDrawerState,
             changeLockState: changeLockState,
+            videoEnd: widget.videoEnd
           ),
         );
       }
@@ -616,12 +619,13 @@ class _buildGestureDetector extends StatefulWidget {
   final BuildContext? pageContent;
   final String playerTitle;
   final Function? onChangeVideo;
-  final int curTabIdx;
-  final int curActiveIdx;
+  // final int curTabIdx;
+  // final int curActiveIdx;
   final Function changeDrawerState;
   final Function changeLockState;
   final ShowConfigAbs showConfig;
-  final VideoSourceFormat? videoFormat;
+  final Function? videoEnd;
+  // final VideoSourceFormat? videoFormat;
   // 每次重绘的时候，设置显示
   final _hideStuff = false;
   _buildGestureDetector({
@@ -633,11 +637,12 @@ class _buildGestureDetector extends StatefulWidget {
     this.playerTitle = "",
     required this.showConfig,
     this.onChangeVideo,
-    required this.curTabIdx,
-    required this.curActiveIdx,
-    required this.videoFormat,
+    // required this.curTabIdx,
+    // required this.curActiveIdx,
+    // required this.videoFormat,
     required this.changeDrawerState,
     required this.changeLockState,
+    this.videoEnd
   }) : super(key: key);
 
   @override
@@ -649,7 +654,7 @@ class _buildGestureDetector extends StatefulWidget {
 class _buildGestureDetectorState extends State<_buildGestureDetector> {
   FijkPlayer get player => widget.player;
   ShowConfigAbs get showConfig => widget.showConfig;
-  VideoSourceFormat get _videoSourceTabs => widget.videoFormat!;
+  // VideoSourceFormat get _videoSourceTabs => widget.videoFormat!;
 
   Duration _duration = Duration();
   Duration _currentPos = Duration();
@@ -707,14 +712,14 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
       _speed = speed;
     });
     // is not null
-    if (_videoSourceTabs.video!.length < 1) return null;
+    // if (_videoSourceTabs.video!.length < 1) return null;
     // url
-    String url = _videoSourceTabs
-        .video![widget.curTabIdx]!.list![widget.curActiveIdx]!.url!;
-    player.setDataSource(
-      url,
-      autoPlay: true,
-    );
+    // String url = _videoSourceTabs
+    //     .video![widget.curTabIdx]!.list![widget.curActiveIdx]!.url!;
+    // player.setDataSource(
+    //   url,
+    //   autoPlay: true,
+    // );
     // 延时隐藏
     _startHideTimer();
   }
@@ -790,17 +795,21 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
     }
     // 播放完成
     bool playend = (value.state == FijkState.completed);
-    String nextVideoUrl = _videoSourceTabs
-        .video![widget.curTabIdx]!.list![widget.curActiveIdx + 1]!.url!;
-    // 播放完成 && tablen没有溢出 && curActive没有溢出
-    // ignore: unnecessary_null_comparison
-    if (playend && nextVideoUrl != null && showConfig.autoNext) {
-      int newTabIdx = widget.curTabIdx;
-      int newActiveIdx = widget.curActiveIdx + 1;
-      widget.onChangeVideo!(newTabIdx, newActiveIdx);
-      // 切换播放源
-      changeCurPlayVideo(newTabIdx, newActiveIdx);
+
+    if (playend && widget.videoEnd != null) {
+      widget.videoEnd!();
     }
+    // String nextVideoUrl = _videoSourceTabs
+    //     .video![widget.curTabIdx]!.list![widget.curActiveIdx + 1]!.url!;
+    // // 播放完成 && tablen没有溢出 && curActive没有溢出
+    // // ignore: unnecessary_null_comparison
+    // if (playend && nextVideoUrl != null && showConfig.autoNext) {
+    //   int newTabIdx = widget.curTabIdx;
+    //   int newActiveIdx = widget.curActiveIdx + 1;
+    //   widget.onChangeVideo!(newTabIdx, newActiveIdx);
+    //   // 切换播放源
+    //   changeCurPlayVideo(newTabIdx, newActiveIdx);
+    // }
   }
 
   _onHorizontalDragStart(detills) {
@@ -930,23 +939,23 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
   }
 
   // 切换播放源
-  Future<void> changeCurPlayVideo(int tabIdx, int activeIdx) async {
-    await player.stop();
-    setState(() {
-      _buffering = false;
-    });
-    player.reset().then((_) {
-      _speed = speed = 1.0;
-      String curTabActiveUrl =
-          _videoSourceTabs.video![tabIdx]!.list![activeIdx]!.url!;
-      player.setDataSource(
-        curTabActiveUrl,
-        autoPlay: true,
-      );
-      // 回调
-      widget.onChangeVideo!(tabIdx, activeIdx);
-    });
-  }
+  // Future<void> changeCurPlayVideo(int tabIdx, int activeIdx) async {
+  //   await player.stop();
+  //   setState(() {
+  //     _buffering = false;
+  //   });
+  //   player.reset().then((_) {
+  //     _speed = speed = 1.0;
+  //     String curTabActiveUrl =
+  //         _videoSourceTabs.video![tabIdx]!.list![activeIdx]!.url!;
+  //     player.setDataSource(
+  //       curTabActiveUrl,
+  //       autoPlay: true,
+  //     );
+//      回调
+      // widget.onChangeVideo!(tabIdx, activeIdx);
+    // });
+  // }
 
   void _playOrPause() {
     if (_playing == true) {
@@ -1053,17 +1062,17 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onPressed: () {
-                              bool isOverFlowActiveLen =
-                                  widget.curActiveIdx + 1 >
-                                      _videoSourceTabs.video![widget.curTabIdx]!
-                                          .list!.length;
+                              // bool isOverFlowActiveLen =
+                              //     widget.curActiveIdx + 1 >
+                              //         _videoSourceTabs.video![widget.curTabIdx]!
+                              //             .list!.length;
                               // 播放完成
-                              if (!isOverFlowActiveLen) {
-                                int newTabIdx = widget.curTabIdx;
-                                int newActiveIdx = widget.curActiveIdx + 1;
+                              // if (!isOverFlowActiveLen) {
+                              //   int newTabIdx = widget.curTabIdx;
+                              //   int newActiveIdx = widget.curActiveIdx + 1;
                                 // 切换播放源
-                                changeCurPlayVideo(newTabIdx, newActiveIdx);
-                              }
+                                // changeCurPlayVideo(newTabIdx, newActiveIdx);
+                              // }
                             },
                           )
                         : Container(),
@@ -1202,7 +1211,7 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
                         } else {
                           player.enterFullScreen();
                           // 掉父组件回调
-                          widget.changeDrawerState(false);
+                          // widget.changeDrawerState(false);
                         }
                       },
                     )
