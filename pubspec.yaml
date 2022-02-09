@@ -9,8 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fijkplayer: ^0.10.0
-  wakelock: ^0.5.2
+  fijkplayer: ^0.10.1
+  wakelock: ^0.6.1+1
 
 dev_dependencies:
   flutter_test:
