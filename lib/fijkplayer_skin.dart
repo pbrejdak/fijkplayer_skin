@@ -97,8 +97,8 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
 
   void initEvent() {
     // _tabController = TabController(
-      // length: _videoSourceTabs.video!.length,/
-      // vsync: this,
+    // length: _videoSourceTabs.video!.length,/
+    // vsync: this,
     // );
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 280),
@@ -293,7 +293,7 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
           ),
           // 错误信息
           Text(
-            "播放失败，您可以点击重试！",
+            "Looks like we couldn't load video",
             style: TextStyle(
               color: Colors.white,
               fontSize: 15,
@@ -575,20 +575,19 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
       } else {
         ws.add(
           _buildGestureDetector(
-            // curActiveIdx: widget.curActiveIdx,
-            // curTabIdx: widget.curTabIdx,
-            // onChangeVideo: widget.onChangeVideo,
-            player: widget.player,
-            texturePos: widget.texturePos,
-            showConfig: widget.showConfig,
-            pageContent: widget.pageContent,
-            playerTitle: widget.playerTitle,
-            viewSize: widget.viewSize,
-            // videoFormat: widget.videoFormat,
-            changeDrawerState: changeDrawerState,
-            changeLockState: changeLockState,
-            videoEnd: widget.videoEnd
-          ),
+              // curActiveIdx: widget.curActiveIdx,
+              // curTabIdx: widget.curTabIdx,
+              // onChangeVideo: widget.onChangeVideo,
+              player: widget.player,
+              texturePos: widget.texturePos,
+              showConfig: widget.showConfig,
+              pageContent: widget.pageContent,
+              playerTitle: widget.playerTitle,
+              viewSize: widget.viewSize,
+              // videoFormat: widget.videoFormat,
+              changeDrawerState: changeDrawerState,
+              changeLockState: changeLockState,
+              videoEnd: widget.videoEnd),
         );
       }
     }
@@ -628,22 +627,22 @@ class _buildGestureDetector extends StatefulWidget {
   // final VideoSourceFormat? videoFormat;
   // 每次重绘的时候，设置显示
   final _hideStuff = false;
-  _buildGestureDetector({
-    Key? key,
-    required this.player,
-    required this.viewSize,
-    required this.texturePos,
-    this.pageContent,
-    this.playerTitle = "",
-    required this.showConfig,
-    this.onChangeVideo,
-    // required this.curTabIdx,
-    // required this.curActiveIdx,
-    // required this.videoFormat,
-    required this.changeDrawerState,
-    required this.changeLockState,
-    this.videoEnd
-  }) : super(key: key);
+  _buildGestureDetector(
+      {Key? key,
+      required this.player,
+      required this.viewSize,
+      required this.texturePos,
+      this.pageContent,
+      this.playerTitle = "",
+      required this.showConfig,
+      this.onChangeVideo,
+      // required this.curTabIdx,
+      // required this.curActiveIdx,
+      // required this.videoFormat,
+      required this.changeDrawerState,
+      required this.changeLockState,
+      this.videoEnd})
+      : super(key: key);
 
   @override
   _buildGestureDetectorState createState() =>
@@ -953,8 +952,8 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
   //       autoPlay: true,
   //     );
 //      回调
-      // widget.onChangeVideo!(tabIdx, activeIdx);
-    // });
+  // widget.onChangeVideo!(tabIdx, activeIdx);
+  // });
   // }
 
   void _playOrPause() {
@@ -1070,8 +1069,8 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
                               // if (!isOverFlowActiveLen) {
                               //   int newTabIdx = widget.curTabIdx;
                               //   int newActiveIdx = widget.curActiveIdx + 1;
-                                // 切换播放源
-                                // changeCurPlayVideo(newTabIdx, newActiveIdx);
+                              // 切换播放源
+                              // changeCurPlayVideo(newTabIdx, newActiveIdx);
                               // }
                             },
                           )
